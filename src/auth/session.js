@@ -3,7 +3,7 @@ const sessions = new Map();
 
 export function createSession(userId, now = Date.now()) {
   const id = crypto.randomUUID();
-  sessions.set(id, { userId, expiresAt: now + SESSION_TTL_SECONDS });
+  sessions.set(id, { userId, expiresAt: now + SESSION_TTL_SECONDS * 1000 });
   return id;
 }
 
@@ -24,6 +24,6 @@ export function destroySession(id) {
 /** Sliding expiry: extend an active session on use. */
 export function touchSession(id, now = Date.now()) {
   const session = getSession(id, now);
-  if (session) session.expiresAt = now + SESSION_TTL_SECONDS;
+  if (session) session.expiresAt = now + SESSION_TTL_SECONDS * 1000;
   return session;
 }
