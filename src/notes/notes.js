@@ -10,3 +10,8 @@ export function createNote({ title, body = '', tags = [] }) {
 export function listNotes() {
   return [...notes].sort((a, b) => a.title.localeCompare(b.title));
 }
+
+export function listNotesByTag(tag) {
+  const wanted = tag.toLowerCase();
+  return listNotes().filter((n) => n.tags.some((t) => t.toLowerCase() === wanted));
+}
