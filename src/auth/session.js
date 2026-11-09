@@ -20,3 +20,10 @@ export function getSession(id, now = Date.now()) {
 export function destroySession(id) {
   sessions.delete(id);
 }
+
+/** Sliding expiry: extend an active session on use. */
+export function touchSession(id, now = Date.now()) {
+  const session = getSession(id, now);
+  if (session) session.expiresAt = now + SESSION_TTL_SECONDS;
+  return session;
+}
